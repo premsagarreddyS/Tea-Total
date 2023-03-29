@@ -1,0 +1,48 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class TeaTotal {
+public static void main(String[] args) {
+List&lt;Product&gt; products = new ArrayList&lt;&gt;();
+products.add(new Product(&quot;Green Tea&quot;, 2022, 10.0));
+products.add(new Product(&quot;Black Tea&quot;, 2022, 5.0));
+products.add(new Product(&quot;Herbal Tea&quot;, 2021, 8.0));
+products.add(new Product(&quot;Iced Tea&quot;, 2021, 12.0));
+products.add(new Product(&quot;Chai Tea&quot;, 2023, 15.0));
+
+Map&lt;Integer, Double&gt; teaTotalsByYear = products.stream()
+.filter(p -&gt; p.getName().contains(&quot;Tea&quot;))
+.collect(Collectors.groupingBy(Product::getYear,
+Collectors.summingDouble(Product::getPrice)));
+
+System.out.println(&quot;Tea totals by year:&quot;);
+teaTotalsByYear.forEach((year, total) -&gt; System.out.println(year + &quot;: &quot; + total));
+}
+}
+
+class Product {
+private String name;
+private int year;
+private double price;
+
+public Product(String name, int year, double price) {
+this.name = name;
+this.year = year;
+this.price = price;
+}
+
+public String getName() {
+return name;
+}
+
+public int getYear() {
+return year;
+}
+
+public double getPrice() {
+return price;
+}
+}
